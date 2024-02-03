@@ -80,3 +80,27 @@ export const getItemValuesStyles = (
       : { ...item, opacity: 0, transform: "none" };
   });
 };
+
+export const convertTimeToMilliseconds = (
+  hours: string,
+  minutes: string,
+  seconds: string
+) => {
+  const hoursAsInt = parseInt(hours);
+  const minutesAsInt = parseInt(minutes);
+  const secondsAsInt = parseInt(seconds);
+
+  return (
+    hoursAsInt * 60 * 60 * 1000 + minutesAsInt * 60 * 1000 + secondsAsInt * 1000
+  );
+};
+
+export const getLabelText = (secondsLeft: number) => {
+  if (secondsLeft < 0) return "00:00:00";
+  const hours = Math.floor(secondsLeft / 3600);
+  const minutes = Math.floor((secondsLeft - hours * 3600) / 60);
+  const seconds = Math.floor(secondsLeft - hours * 3600 - minutes * 60);
+  return `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+};

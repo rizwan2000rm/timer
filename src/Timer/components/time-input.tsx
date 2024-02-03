@@ -1,20 +1,31 @@
-import { useState } from "react";
-import { PickerItem } from "./PickerItem";
-import "../assets/css/embla.css";
+import { PickerItem } from "./picker-item";
+import "../shared/css/embla.css";
 
-const TimeInput = () => {
-  const [hourValue, setHourValue] = useState("0");
-  const [minuteValue, setMinuteValue] = useState("00");
-  const [secondValue, setSecondValue] = useState("00");
+type Props = {
+  hourValue: string;
+  setHourValue: (value: string) => void;
+  minuteValue: string;
+  setMinuteValue: (value: string) => void;
+  secondValue: string;
+  setSecondValue: (value: string) => void;
+};
 
+const TimeInput = ({
+  hourValue,
+  setHourValue,
+  minuteValue,
+  setMinuteValue,
+  secondValue,
+  setSecondValue,
+}: Props) => {
   const hourItems = Array.from({ length: 24 }, (_, index) => ({
     value: `${index}`,
     label: `${index}`,
   }));
 
   const minuteItems = Array.from({ length: 60 }, (_, index) => ({
-    value: `${index.toString().padStart(2, "0")}`,
-    label: `${index.toString().padStart(2, "0")}`,
+    value: `${index}`,
+    label: `${index}`,
   }));
 
   return (

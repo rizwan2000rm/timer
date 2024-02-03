@@ -109,4 +109,9 @@
   backface-visibility: hidden;
   opacity: 0;
   color: #b6b6b8;
+  cursor: grab;
+}
+
+.embla__ios-picker__slide:active {
+  cursor: grabbing;
 }

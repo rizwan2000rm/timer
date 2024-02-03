@@ -1,30 +1,25 @@
-import TimeInput from "./component/TimeInput";
+import { Toaster } from "react-hot-toast";
+import Timer from "./Timer/components";
 
-const App = () => {
-  const CancelButton = (
-    <button className="bg-zinc-900 text-zinc-600 rounded-full w-24 h-24 hover:opacity-80 outline-none focus-within:ring-2 ring-zinc-600">
-      Cancel
-    </button>
-  );
-
-  const StartButton = (
-    <button className="bg-green-950 text-green-500 rounded-full w-24 h-24 hover:opacity-80 outline-none focus-within:ring-2 ring-green-500">
-      Start
-    </button>
-  );
-
-  return (
-    <div className="bg-black h-screen w-screen text-white p-4">
-      <h1 className="text-center">Timers</h1>
-      <div className="grid place-items-center h-full">
-        <div className="flex justify-between items-center w-full">
-          {CancelButton}
-          <TimeInput />
-          {StartButton}
-        </div>
-      </div>
+const App = () => (
+  <div className="bg-black h-screen w-screen text-white">
+    <div className="max-w-[1200px] mx-auto p-4 h-full">
+      <h1 className="text-center text-2xl">Timers</h1>
+      <Timer />
     </div>
-  );
-};
+    <Toaster
+      position="top-right"
+      toastOptions={{
+        success: {
+          duration: 3000,
+          style: {
+            background: "#0B2912",
+            color: "#27D351",
+          },
+        },
+      }}
+    />
+  </div>
+);
 
 export default App;

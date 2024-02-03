@@ -8,3 +8,5 @@ export const IN_VIEW_DEGREES = WHEEL_ITEM_RADIUS * WHEEL_ITEMS_IN_VIEW;
 export const WHEEL_RADIUS = Math.round(
   WHEEL_ITEM_SIZE / 2 / Math.tan(Math.PI / WHEEL_ITEM_COUNT)
 );
+
+export const INTERVAL_IN_MILLISECONDS = 100;
