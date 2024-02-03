@@ -7,13 +7,21 @@ import {
 import { getLabelText } from "../shared/utils";
 import { format } from "date-fns";
 import "react-circular-progressbar/dist/styles.css";
+import { TimerState } from "../shared/type";
 
 interface Props {
   timeInMilliseconds: number;
   handleComplete: () => void;
+  timerState: TimerState;
+  setTimerState: (state: TimerState) => void;
 }
 
-const Countdown = ({ timeInMilliseconds, handleComplete }: Props) => {
+const Countdown = ({
+  timeInMilliseconds,
+  handleComplete,
+  timerState,
+  setTimerState,
+}: Props) => {
   const [currentTime, setCurrentTime] = useState(timeInMilliseconds);
   const [startTime] = useState(Date.now());
   const [referenceTime, setReferenceTime] = useState(Date.now());
@@ -21,6 +29,15 @@ const Countdown = ({ timeInMilliseconds, handleComplete }: Props) => {
   const secondsLeft = +(currentTime / 1000).toFixed(1);
 
   useEffect(() => {
+    if (timerState === "paused") {
+      return;
+    }
+
+    if (timerState === "resumed") {
+      setReferenceTime(Date.now());
+      setTimerState("default");
+    }
+
     const countDownUntilZero = () => {
       setCurrentTime((prevTime) => {
         if (prevTime <= 0) {
@@ -34,13 +51,14 @@ const Countdown = ({ timeInMilliseconds, handleComplete }: Props) => {
       });
     };
 
-    setTimeout(countDownUntilZero, INTERVAL_IN_MILLISECONDS);
+    const timerId = setTimeout(countDownUntilZero, INTERVAL_IN_MILLISECONDS);
 
     // to stop the timer and unmount the component
     if (currentTime <= 0) return handleComplete();
 
+    return () => clearTimeout(timerId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTime]);
+  }, [currentTime, timerState]);
 
   return (
     <div className="w-1/2 max-w-[500px]">
