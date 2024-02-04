@@ -14,3 +14,4 @@ export const INTERVAL_IN_MILLISECONDS = 100;
 export const LS_TIMER = "timer";
 export const LS_START_TIME = "time_start_time";
 export const LS_LEFT_TIME = "time_left_time";
+export const LS_RECENT_TIMERS = "recent_timers";

@@ -2,11 +2,11 @@ import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
-import { getLabelText } from "../shared/utils";
 import { format } from "date-fns";
 import "react-circular-progressbar/dist/styles.css";
 import { TimerState } from "../shared/type";
 import useCountdown from "../shared/hooks/useCountdown";
+import { getLabelText } from "../shared/utils";
 
 interface Props {
   timeInMilliseconds: number;

@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { TimerLocalStorage, TimerState } from "../type";
+import { RecentTimer, TimerLocalStorage, TimerState } from "../type";
 import {
   appendTimerDataToLocalStorage,
   convertTimeToMilliseconds,
@@ -13,7 +13,8 @@ import { LS_LEFT_TIME, LS_START_TIME, LS_TIMER } from "../const";
 const useTimer = (
   hourValue: string,
   minuteValue: string,
-  secondValue: string
+  secondValue: string,
+  addToRecent: (timer: RecentTimer) => void
 ) => {
   // keeping a state for the total time in seconds for countdown
   const [timeInMilliseconds, setTimeInMilliseconds] = useState(0);
@@ -58,6 +59,10 @@ const useTimer = (
     );
     setTimeInMilliseconds(timeInMilliseconds);
     setIsTimerRunning(true);
+    addToRecent({
+      id: Date.now(),
+      timeInMilliseconds,
+    });
   };
 
   const handlePause = () => {
@@ -75,6 +80,8 @@ const useTimer = (
     setTimerState,
     timeInMilliseconds,
     isTimerRunning,
+    setIsTimerRunning,
+    setTimeInMilliseconds,
   };
 };
 
