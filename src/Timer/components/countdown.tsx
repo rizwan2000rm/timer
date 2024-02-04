@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { INTERVAL_IN_MILLISECONDS } from "../shared/const";
 import {
   CircularProgressbarWithChildren,
   buildStyles,
@@ -8,6 +6,7 @@ import { getLabelText } from "../shared/utils";
 import { format } from "date-fns";
 import "react-circular-progressbar/dist/styles.css";
 import { TimerState } from "../shared/type";
+import useCountdown from "../shared/hooks/useCountdown";
 
 interface Props {
   timeInMilliseconds: number;
@@ -18,50 +17,16 @@ interface Props {
 
 const Countdown = ({
   timeInMilliseconds,
-  handleComplete,
   timerState,
   setTimerState,
+  handleComplete,
 }: Props) => {
-  const [currentTime, setCurrentTime] = useState(timeInMilliseconds);
-  const [endTime, setEndTime] = useState(
-    new Date(Date.now() + timeInMilliseconds)
+  const { endTime, secondsLeft } = useCountdown(
+    timerState,
+    setTimerState,
+    timeInMilliseconds,
+    handleComplete
   );
-  const [referenceTime, setReferenceTime] = useState(Date.now());
-
-  const secondsLeft = +(currentTime / 1000).toFixed(1);
-
-  useEffect(() => {
-    if (timerState === "paused") {
-      return;
-    }
-
-    if (timerState === "resumed") {
-      setEndTime(new Date(Date.now() + secondsLeft * 1000));
-      setReferenceTime(Date.now());
-      setTimerState("default");
-    }
-
-    const countDownUntilZero = () => {
-      setCurrentTime((prevTime) => {
-        if (prevTime <= 0) {
-          return 0;
-        }
-
-        const now = Date.now();
-        const interval = now - referenceTime;
-        setReferenceTime(now);
-        return prevTime - interval;
-      });
-    };
-
-    const timerId = setTimeout(countDownUntilZero, INTERVAL_IN_MILLISECONDS);
-
-    // to stop the timer and unmount the component
-    if (currentTime <= 0) return handleComplete();
-
-    return () => clearTimeout(timerId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTime, timerState]);
 
   const EndTime = (
     <div

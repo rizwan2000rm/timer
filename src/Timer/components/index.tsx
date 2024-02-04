@@ -1,12 +1,7 @@
 import { useState } from "react";
-import { convertTimeToMilliseconds } from "../shared/utils";
 import TimeInput from "./time-input";
 import Countdown from "./countdown";
-import toast from "react-hot-toast";
-// @ts-expect-error Lib has no ts definitions
-import useSound from "use-sound";
-import radar from "../shared/assets/radar.mp3";
-import { TimerState } from "../shared/type";
+import useTimer from "../shared/hooks/useTimer";
 
 const Timer = () => {
   // values of individual inputs
@@ -14,40 +9,16 @@ const Timer = () => {
   const [minuteValue, setMinuteValue] = useState("0");
   const [secondValue, setSecondValue] = useState("0");
 
-  // keeping a state for the total time in seconds for countdown
-  const [timeInMilliseconds, setTimeInMilliseconds] = useState(0);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [timerState, setTimerState] = useState<TimerState>("default");
-
-  // timer finish notification sound
-  const [play] = useSound(radar);
-
-  const handleCancel = () => {
-    setIsTimerRunning(false);
-    setTimerState("default");
-    setTimeInMilliseconds(0);
-  };
-
-  const handleComplete = () => {
-    handleCancel();
-
-    toast.success("Time's up!");
-    play();
-  };
-
-  const handleStart = () => {
-    const timeInMilliseconds = convertTimeToMilliseconds(
-      hourValue,
-      minuteValue,
-      secondValue
-    );
-    setTimeInMilliseconds(timeInMilliseconds);
-    setIsTimerRunning(true);
-  };
-
-  const handlePause = () => {
-    setTimerState(timerState === "default" ? "paused" : "resumed");
-  };
+  const {
+    handleStart,
+    handlePause,
+    handleCancel,
+    handleComplete,
+    timerState,
+    setTimerState,
+    timeInMilliseconds,
+    isTimerRunning,
+  } = useTimer(hourValue, minuteValue, secondValue);
 
   const CancelButton = (
     <button

@@ -5,6 +5,7 @@ import {
   WHEEL_ITEM_RADIUS,
   WHEEL_RADIUS,
 } from "./const";
+import { TimerState } from "./type";
 
 export const isInView = (
   wheelLocation: number,
@@ -109,4 +110,19 @@ export const getLabelText = (secondsLeft: number) => {
   return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
     .toString()
     .padStart(2, "0")}`;
+};
+
+export const appendTimerDataToLocalStorage = (
+  timerState: TimerState,
+  timeInMilliseconds: number,
+  timeLeft: number
+) => {
+  localStorage.setItem(
+    "timer",
+    JSON.stringify({
+      timerState,
+      timeInMilliseconds,
+      timeLeft,
+    })
+  );
 };
