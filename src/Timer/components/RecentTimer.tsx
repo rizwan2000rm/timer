@@ -25,7 +25,7 @@ const RecentTimers = ({
   if (recentTimers.length === 0) return <></>;
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full overflow-hidden pt-4 md:pt-0">
       Recent
       <div className="flex gap-4 overflow-x-auto py-4">
         {recentTimers.map((timer, index) => (
