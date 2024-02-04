@@ -68,11 +68,16 @@ const Timer = () => {
   );
 
   return (
-    <div className="grid place-items-center w-full h-full">
-      <div className="flex justify-between items-center w-full h-full">
-        {CancelButton}
-        {TimerDisplay}
-        {isTimerRunning ? PauseButton : StartButton}
+    <div className="flex justify-center items-center w-full h-[calc(100%-32px)]">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full h-full">
+        <div className="hidden md:block">{CancelButton}</div>
+        <div className="w-full h-full grid place-items-center">
+          {TimerDisplay}
+        </div>
+        <div className="flex justify-between w-full md:w-auto">
+          <div className="block md:hidden">{CancelButton}</div>
+          {isTimerRunning ? PauseButton : StartButton}
+        </div>
       </div>
     </div>
   );

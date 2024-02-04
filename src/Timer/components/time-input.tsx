@@ -29,7 +29,7 @@ const TimeInput = ({
   }));
 
   return (
-    <div className="embla">
+    <div className="embla w-full max-w-96">
       <div className="embla-highlight"></div>
       <PickerItem
         value={hourValue}

@@ -6,3 +6,7 @@
   font-family: "SF Pro Display Light";
   src: url("/SF\ Pro\ Display\ Light.otf") format("opentype");
 }
+
+body {
+  @apply bg-black;
+}

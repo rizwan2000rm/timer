@@ -48,7 +48,7 @@ const Countdown = ({
   );
 
   return (
-    <div className="w-1/2 max-w-[500px]">
+    <div className="w-2/3 md:w-1/2 max-w-[500px] mx-auto">
       <CircularProgressbarWithChildren
         value={timeLeft}
         minValue={0}
@@ -60,9 +60,11 @@ const Countdown = ({
           trailColor: "#26252A",
         })}
       >
-        <div className="w-full h-full flex flex-col items-center pt-[30%]">
+        <div className="w-full h-full flex flex-col items-center pt-[25%] md:pt-[30%]">
           {EndTime}
-          <div className="text-8xl font-thin">{getLabelText(timeLeft)}</div>
+          <div className="text-5xl lg:text-8xl font-thin">
+            {getLabelText(timeLeft)}
+          </div>
         </div>
       </CircularProgressbarWithChildren>
     </div>

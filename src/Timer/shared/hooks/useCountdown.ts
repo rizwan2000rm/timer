@@ -76,6 +76,7 @@ const useCountdown = (
     setTimeLeft(timeLeft);
     setReferenceTime(now);
     setTimerState("default");
+    setEndTime(new Date(Date.now() + timeLeft));
   };
 
   return {
