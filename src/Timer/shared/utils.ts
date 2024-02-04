@@ -2,6 +2,7 @@ import { EmblaCarouselType } from "embla-carousel-react";
 import {
   CIRCLE_DEGREES,
   IN_VIEW_DEGREES,
+  LS_TIMER,
   WHEEL_ITEM_RADIUS,
   WHEEL_RADIUS,
 } from "./const";
@@ -96,7 +97,9 @@ export const convertTimeToMilliseconds = (
   );
 };
 
-export const getLabelText = (secondsLeft: number) => {
+export const getLabelText = (millisecondsLeft: number) => {
+  const secondsLeft = millisecondsLeft / 1000;
+
   if (secondsLeft < 0) return "00:00:00";
   const hours = Math.floor(secondsLeft / 3600);
   const minutes = Math.floor((secondsLeft - hours * 3600) / 60);
@@ -114,15 +117,13 @@ export const getLabelText = (secondsLeft: number) => {
 
 export const appendTimerDataToLocalStorage = (
   timerState: TimerState,
-  timeInMilliseconds: number,
-  timeLeft: number
+  timeInMilliseconds: number
 ) => {
   localStorage.setItem(
-    "timer",
+    LS_TIMER,
     JSON.stringify({
       timerState,
       timeInMilliseconds,
-      timeLeft,
     })
   );
 };

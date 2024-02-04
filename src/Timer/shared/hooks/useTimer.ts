@@ -1,10 +1,14 @@
 import toast from "react-hot-toast";
-import { useState } from "react";
-import { TimerState } from "../type";
-import { convertTimeToMilliseconds } from "../utils";
+import { useEffect, useState } from "react";
+import { TimerLocalStorage, TimerState } from "../type";
+import {
+  appendTimerDataToLocalStorage,
+  convertTimeToMilliseconds,
+} from "../utils";
 import radar from "../assets/radar.mp3";
 // @ts-expect-error Lib has no ts definitions
 import useSound from "use-sound";
+import { LS_LEFT_TIME, LS_START_TIME, LS_TIMER } from "../const";
 
 const useTimer = (
   hourValue: string,
@@ -19,11 +23,25 @@ const useTimer = (
   // timer finish notification sound
   const [play] = useSound(radar);
 
+  useEffect(() => {
+    const timerData = localStorage.getItem(LS_TIMER);
+    if (timerData) {
+      const { timeInMilliseconds, timerState } = JSON.parse(
+        timerData
+      ) as TimerLocalStorage;
+      setIsTimerRunning(true);
+      setTimerState(timerState);
+      setTimeInMilliseconds(timeInMilliseconds);
+    }
+  }, []);
+
   const handleCancel = () => {
     setIsTimerRunning(false);
     setTimerState("default");
     setTimeInMilliseconds(0);
-    localStorage.removeItem("timer");
+    localStorage.removeItem(LS_TIMER);
+    localStorage.removeItem(LS_START_TIME);
+    localStorage.removeItem(LS_LEFT_TIME);
   };
 
   const handleComplete = () => {
@@ -43,7 +61,9 @@ const useTimer = (
   };
 
   const handlePause = () => {
-    setTimerState(timerState === "default" ? "paused" : "resumed");
+    const newTimerState = timerState === "default" ? "paused" : "resumed";
+    setTimerState(newTimerState);
+    appendTimerDataToLocalStorage(newTimerState, timeInMilliseconds);
   };
 
   return {

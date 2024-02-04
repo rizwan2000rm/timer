@@ -21,7 +21,7 @@ const Countdown = ({
   setTimerState,
   handleComplete,
 }: Props) => {
-  const { endTime, secondsLeft } = useCountdown(
+  const { timeLeft, endTime } = useCountdown(
     timerState,
     setTimerState,
     timeInMilliseconds,
@@ -50,9 +50,9 @@ const Countdown = ({
   return (
     <div className="w-1/2 max-w-[500px]">
       <CircularProgressbarWithChildren
-        value={secondsLeft}
+        value={timeLeft}
         minValue={0}
-        maxValue={timeInMilliseconds / 1000}
+        maxValue={timeInMilliseconds}
         strokeWidth={2}
         styles={buildStyles({
           textColor: "#FFF",
@@ -62,7 +62,7 @@ const Countdown = ({
       >
         <div className="w-full h-full flex flex-col items-center pt-[30%]">
           {EndTime}
-          <div className="text-8xl font-thin">{getLabelText(secondsLeft)}</div>
+          <div className="text-8xl font-thin">{getLabelText(timeLeft)}</div>
         </div>
       </CircularProgressbarWithChildren>
     </div>
